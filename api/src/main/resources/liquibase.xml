@@ -1067,6 +1067,30 @@
             <column name="attribute_type_id" />
         </createIndex>
     </changeSet>
+    <changeSet id="add_fhir_medication_administration_dosage_20231103" author="kavitha">
+        <preConditions onFail="MARK_RAN" onError="WARN">
+            <not>
+                <tableExists tableName="fhir_medication_administration_dosage"/>
+            </not>
+        </preConditions>
+        <createTable tableName="fhir_medication_administration_dosage">
+            <column name="dosage_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="text" type="varchar(255)"/>
+            <column name="site" type="int"/>
+            <column name="route" type="int"/>
+            <column name="uuid" type="varchar(38)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_dosage" baseColumnNames="site"
+                                 constraintName="fhir_medication_administration_dosage_site_fk"
+                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_dosage" baseColumnNames="route"
+                                 constraintName="fhir_medication_administration_dosage_route_fk"
+                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
+    </changeSet>
     <changeSet id="add_fhir_medication_administration_20231103" author="kavitha">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
@@ -1085,6 +1109,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="status_reason" type="varchar(255)"/>
+            <column name="effective_date_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
             <column name="uuid" type="char(38)">
                 <constraints nullable="false" unique="true"/>
             </column>
@@ -1093,6 +1120,8 @@
             </column>
             <column name="subject_reference_id" type="int"/>
             <column name="performer_reference_id" type="int"/>
+            <column name="request_reference_id" type="int"/>
+            <column name="dosage_id" type="int"/>
             <column name="creator" type="int">
                 <constraints nullable="false"/>
             </column>
@@ -1130,6 +1159,14 @@
                                  constraintName="medication_performer_reference_fk"
                                  referencedTableName="fhir_reference"
                                  referencedColumnNames="reference_id"/>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="request_reference_id"
+                                 constraintName="medication_request_reference_fk"
+                                 referencedTableName="fhir_reference"
+                                 referencedColumnNames="reference_id"/>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="dosage_id"
+                                 constraintName="medication_dosage_fk"
+                                 referencedTableName="fhir_medication_administration_dosage"
+                                 referencedColumnNames="dosage_id"/>
     </changeSet>
     <changeSet id="add_fhir_annotation_20231103" author="kavitha">
         <preConditions onFail="MARK_RAN" onError="WARN">

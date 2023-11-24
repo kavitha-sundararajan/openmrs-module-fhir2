@@ -11,6 +11,7 @@ package org.openmrs.module.fhir2.model;
 
 import javax.persistence.*;
 
+import java.util.Date;
 import java.util.Set;
 
 import lombok.Data;
@@ -51,6 +52,14 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	@Column(name = "status", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private MedicationAdministrationStatus status;
+
+	/**
+	 * A specific date/time or interval of time during which the administration took place (or did not take place,
+	 * when the 'notGiven' attribute is true). For many administrations, such as swallowing a tablet the use of
+	 * dateTime is more appropriate.
+	 */
+	@Column(name = "effective_date_time", nullable = false)
+	private Date effectiveDateTime;
 	
 	/**
 	 * Identifies the medication that was administered. This is either a link to a resource representing
@@ -76,12 +85,25 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	private FhirReference performerReference;
 	
 	/**
+	 * The original request, instruction or authority to perform the administration.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "request_reference_id", referencedColumnName = "reference_id")
+	private FhirReference requestReference;
+	
+	/**
+	 * Describes the medication dosage information details e.g. dose, rate, site, route, etc.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "dosage_id", referencedColumnName = "dosage_id")
+	private FhirMedicationAdministrationDosage dosage;
+	
+	/**
 	 * Extra information about the medication administration that is not conveyed by the other
 	 * attributes.
 	 */
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "medication_administration_id")
 	private Set<FhirAnnotation> note;
-	//	@Column(name = "note")
-	//	private String note;
+	
 }

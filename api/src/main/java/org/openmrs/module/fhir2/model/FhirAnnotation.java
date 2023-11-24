@@ -26,7 +26,8 @@ import lombok.Setter;
 import org.openmrs.BaseOpenmrsMetadata;
 
 /**
- * FHIR Reference - https://www.hl7.org/fhir/references.html
+ * FHIR Annotation -
+ * https://hl7.org/fhir/R4/medicationadministration-definitions.html#MedicationAdministration.note
  */
 @Getter
 @Setter
