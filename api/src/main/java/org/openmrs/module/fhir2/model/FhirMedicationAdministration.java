@@ -32,6 +32,8 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 		ON_HOLD,
 		STOPPED,
 		COMPLETED,
+		NOT_DONE,
+		ENTERED_IN_ERROR,
 		UNKNOWN
 	}
 	
@@ -80,9 +82,9 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	/**
 	 * Indicates who or what performed the medication administration and how they were involved.
 	 */
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "performer_reference_id", referencedColumnName = "reference_id")
-	private FhirReference performerReference;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "medication_administration_id")
+	private Set<FhirMedicationAdministrationPerformer> performer;
 	
 	/**
 	 * The original request, instruction or authority to perform the administration.

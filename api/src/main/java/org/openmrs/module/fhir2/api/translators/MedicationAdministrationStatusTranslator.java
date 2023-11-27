@@ -12,17 +12,29 @@ package org.openmrs.module.fhir2.api.translators;
 import javax.annotation.Nonnull;
 
 import org.hl7.fhir.r4.model.MedicationAdministration;
+import org.openmrs.DrugOrder;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 
-public interface MedicationAdministrationStatusTranslator extends ToFhirTranslator<FhirMedicationAdministration, MedicationAdministration.MedicationAdministrationStatus> {
+public interface MedicationAdministrationStatusTranslator extends OpenmrsFhirTranslator<FhirMedicationAdministration.MedicationAdministrationStatus, MedicationAdministration.MedicationAdministrationStatus> {
 
     /**
      * Maps an {@link org.openmrs.module.fhir2.model.FhirMedicationAdministration} to a {@link MedicationAdministration.MedicationAdministrationStatus}
      * resource
      *
-     * @param fhirMedicationAdministration the OpenMRS drugOrder to translate
+     * @param fhirMedicationAdministrationStatus the OpenMRS drugOrder to translate
      * @return the corresponding FHIR resource
      */
     @Override
-    MedicationAdministration.MedicationAdministrationStatus toFhirResource(@Nonnull FhirMedicationAdministration fhirMedicationAdministration);
+    MedicationAdministration.MedicationAdministrationStatus toFhirResource(@Nonnull FhirMedicationAdministration.MedicationAdministrationStatus fhirMedicationAdministrationStatus);
+
+    /**
+     * Maps a {@link MedicationAdministration} medicationAdministration to an existing
+     * {@link FhirMedicationAdministration}
+     *
+     * @param medicationAdministrationStatus the medicationAdministration to map
+     * @return an updated version of the existingDrugOrder
+     */
+    @Override
+    FhirMedicationAdministration.MedicationAdministrationStatus toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationStatus medicationAdministrationStatus);
+
 }

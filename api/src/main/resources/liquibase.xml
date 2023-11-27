@@ -1115,9 +1115,7 @@
             <column name="uuid" type="char(38)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="medication_reference_id" type="int">
-                <constraints nullable="false"/>
-            </column>
+            <column name="medication_reference_id" type="int"/>
             <column name="subject_reference_id" type="int"/>
             <column name="performer_reference_id" type="int"/>
             <column name="request_reference_id" type="int"/>
@@ -1187,6 +1185,7 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="date_created" type="datetime"/>
+            <column name="date_changed" type="datetime"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="fhir_annotation" baseColumnNames="author_reference_id"
                                  constraintName="annotation_author_reference_fk"
@@ -1196,6 +1195,44 @@
                                  constraintName="annotation_medication_administration_fk"
                                  referencedTableName="fhir_medication_administration"
                                  referencedColumnNames="medication_administration_id"/>
+    </changeSet>
+    <changeSet id="add_fhir_medication_administration_performer_20231103" author="kavitha">
+        <preConditions onFail="MARK_RAN" onError="WARN">
+            <not>
+                <tableExists tableName="fhir_medication_administration_performer"/>
+            </not>
+            <tableExists tableName="fhir_medication_administration"/>
+            <tableExists tableName="fhir_reference"/>
+        </preConditions>
+        <createTable tableName="fhir_medication_administration_performer">
+            <column name="performer_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="medication_administration_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actor_reference_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="function" type="int"/>
+            <column name="uuid" type="varchar(38)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="date_created" type="datetime"/>
+            <column name="date_changed" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_performer" baseColumnNames="actor_reference_id"
+                                 constraintName="performer_actor_reference_fk"
+                                 referencedTableName="fhir_reference"
+                                 referencedColumnNames="reference_id"/>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_performer" baseColumnNames="medication_administration_id"
+                                 constraintName="performer_medication_administration_fk"
+                                 referencedTableName="fhir_medication_administration"
+                                 referencedColumnNames="medication_administration_id"/>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_performer" baseColumnNames="function"
+                                 constraintName="performer_function_fk"
+                                 referencedTableName="concept"
+                                 referencedColumnNames="concept_id"/>
     </changeSet>
     <changeSet id="add_based_on_ref_join_table_with_med_adm_20231103" author="kavitha">
         <preConditions onFail="MARK_RAN" onError="WARN">

@@ -25,19 +25,50 @@ import org.springframework.stereotype.Component;
 public class MedicationAdministrationStatusTranslatorImpl implements MedicationAdministrationStatusTranslator {
 
     @Override
-    public MedicationAdministration.MedicationAdministrationStatus toFhirResource(@Nonnull FhirMedicationAdministration fhirMedicationAdministration) {
-        if (fhirMedicationAdministration == null) {
+    public MedicationAdministration.MedicationAdministrationStatus toFhirResource(@Nonnull FhirMedicationAdministration.MedicationAdministrationStatus fhirMedicationAdministrationStatus) {
+        if (fhirMedicationAdministrationStatus == null) {
             return null;
         }
-        return null;
 
-//        if (fhirMedicationAdministration.getStatus()) {
-//            return MedicationRequest.MedicationRequestStatus.ACTIVE;
-//        } else if (fhirMedicationAdministration.isDiscontinuedRightNow() || drugOrder.getVoided()) {
-//            return MedicationRequest.MedicationRequestStatus.CANCELLED;
-//        } else if (fhirMedicationAdministration.isExpired()) {
-//            return MedicationRequest.MedicationRequestStatus.STOPPED;
-//        }
-//        return MedicationRequest.MedicationRequestStatus.UNKNOWN;
+        if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.IN_PROGRESS)) {
+            return MedicationAdministration.MedicationAdministrationStatus.INPROGRESS;
+        } else if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.ON_HOLD)) {
+            return MedicationAdministration.MedicationAdministrationStatus.ONHOLD;
+        } else if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.COMPLETED)) {
+            return MedicationAdministration.MedicationAdministrationStatus.COMPLETED;
+        } else if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.STOPPED)) {
+            return MedicationAdministration.MedicationAdministrationStatus.STOPPED;
+        } else if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.UNKNOWN)) {
+            return MedicationAdministration.MedicationAdministrationStatus.UNKNOWN;
+        } else if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.NOT_DONE)) {
+            return MedicationAdministration.MedicationAdministrationStatus.NOTDONE;
+        } else if (fhirMedicationAdministrationStatus.equals(FhirMedicationAdministration.MedicationAdministrationStatus.ENTERED_IN_ERROR)) {
+            return MedicationAdministration.MedicationAdministrationStatus.ENTEREDINERROR;
+        }
+        return MedicationAdministration.MedicationAdministrationStatus.NULL;
+    }
+
+    @Override
+    public FhirMedicationAdministration.MedicationAdministrationStatus toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationStatus medicationAdministrationStatus) {
+        if (medicationAdministrationStatus == null) {
+            return null;
+        }
+
+        if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.INPROGRESS)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.IN_PROGRESS;
+        } else if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.ONHOLD)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.ON_HOLD;
+        } else if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.COMPLETED)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.COMPLETED;
+        } else if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.STOPPED)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.STOPPED;
+        } else if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.UNKNOWN)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.UNKNOWN;
+        } else if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.NOTDONE)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.NOT_DONE;
+        } else if (medicationAdministrationStatus.equals(MedicationAdministration.MedicationAdministrationStatus.ENTEREDINERROR)) {
+            return FhirMedicationAdministration.MedicationAdministrationStatus.ENTERED_IN_ERROR;
+        }
+        return FhirMedicationAdministration.MedicationAdministrationStatus.UNKNOWN;
     }
 }

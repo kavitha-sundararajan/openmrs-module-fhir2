@@ -25,6 +25,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openmrs.BaseOpenmrsMetadata;
 
+import java.util.Date;
+
 /**
  * FHIR Annotation -
  * https://hl7.org/fhir/R4/medicationadministration-definitions.html#MedicationAdministration.note
@@ -49,5 +51,8 @@ public class FhirAnnotation extends BaseOpenmrsMetadata {
 	
 	@Column(name = "text")
 	private String text;
+
+	@Column(name = "date_created")
+	private Date time;
 	
 }
