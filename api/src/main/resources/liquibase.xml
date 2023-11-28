@@ -1108,7 +1108,6 @@
             <column name="status" type="varchar(255)" defaultValue="UNKNOWN">
                 <constraints nullable="false"/>
             </column>
-            <column name="status_reason" type="varchar(255)"/>
             <column name="effective_date_time" type="datetime">
                 <constraints nullable="false"/>
             </column>
@@ -1117,7 +1116,6 @@
             </column>
             <column name="medication_reference_id" type="int"/>
             <column name="subject_reference_id" type="int"/>
-            <column name="performer_reference_id" type="int"/>
             <column name="request_reference_id" type="int"/>
             <column name="dosage_id" type="int"/>
             <column name="creator" type="int">
@@ -1151,10 +1149,6 @@
                                  referencedColumnNames="reference_id"/>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="subject_reference_id"
                                  constraintName="medication_subject_reference_fk"
-                                 referencedTableName="fhir_reference"
-                                 referencedColumnNames="reference_id"/>
-        <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="performer_reference_id"
-                                 constraintName="medication_performer_reference_fk"
                                  referencedTableName="fhir_reference"
                                  referencedColumnNames="reference_id"/>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="request_reference_id"
