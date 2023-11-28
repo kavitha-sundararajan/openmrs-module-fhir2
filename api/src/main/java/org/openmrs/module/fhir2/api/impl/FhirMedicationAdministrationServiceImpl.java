@@ -10,14 +10,14 @@
 package org.openmrs.module.fhir2.api.impl;
 
 import ca.uhn.fhir.rest.api.server.IBundleProvider;
+import ca.uhn.fhir.rest.server.exceptions.InvalidRequestException;
+import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hl7.fhir.r4.model.MedicationAdministration;
-import org.openmrs.DrugOrder;
 import org.openmrs.module.fhir2.api.FhirMedicationAdministrationService;
 import org.openmrs.module.fhir2.api.dao.FhirMedicationAdministrationDao;
-import org.openmrs.module.fhir2.api.dao.FhirMedicationRequestDao;
 import org.openmrs.module.fhir2.api.search.SearchQuery;
 import org.openmrs.module.fhir2.api.search.SearchQueryInclude;
 import org.openmrs.module.fhir2.api.search.param.MedicationAdministrationSearchParams;
@@ -25,6 +25,8 @@ import org.openmrs.module.fhir2.api.translators.MedicationAdministrationTranslat
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Nonnull;
 
 @Component
 @Setter(AccessLevel.PACKAGE)
@@ -49,4 +51,36 @@ public class FhirMedicationAdministrationServiceImpl extends BaseFhirService<Med
                 searchQueryInclude);
     }
 
+	@Override
+	public MedicationAdministration create(@Nonnull MedicationAdministration medicationAdministration) {
+
+		if (medicationAdministration == null) {
+			throw new InvalidRequestException("medicationAdministration cannot be null");
+		}
+		return super.create(medicationAdministration);
+	}
+
+	@Override
+	public MedicationAdministration update(@Nonnull String uuid,
+										   @Nonnull MedicationAdministration medicationAdministration) {
+
+		if (uuid == null) {
+			throw new InvalidRequestException("Uuid cannot be null.");
+		}
+		return super.update(uuid, medicationAdministration);
+	}
+
+	@Override
+	public void delete(@Nonnull String uuid) {
+		if (uuid == null) {
+			throw new InvalidRequestException("Uuid cannot be null.");
+		}
+
+		try {
+			super.delete(uuid);
+		}
+		catch (ResourceNotFoundException e) {
+			throw e;
+		}
+	}
 }
