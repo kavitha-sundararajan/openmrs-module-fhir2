@@ -9,30 +9,32 @@
  */
 package org.openmrs.module.fhir2.api.translators;
 
+import javax.annotation.Nonnull;
+
 import org.hl7.fhir.r4.model.MedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministrationDosage;
 
-import javax.annotation.Nonnull;
-
 public interface MedicationAdministrationDosageTranslator extends OpenmrsFhirTranslator<FhirMedicationAdministrationDosage, MedicationAdministration.MedicationAdministrationDosageComponent> {
-
-    /**
-     * Maps an {@link FhirMedicationAdministrationDosage} to a {@link MedicationAdministration.MedicationAdministrationDosageComponent}
-     * resource
-     *
-     * @param fhirMedicationAdministrationDosage the OpenMRS drugOrder to translate
-     * @return the corresponding FHIR resource
-     */
-    @Override
-    MedicationAdministration.MedicationAdministrationDosageComponent toFhirResource(@Nonnull FhirMedicationAdministrationDosage fhirMedicationAdministrationDosage);
-
-    /**
-     * Maps a {@link MedicationAdministration.MedicationAdministrationDosageComponent} medicationAdministration to an existing
-     * {@link FhirMedicationAdministrationDosage}
-     *
-     * @param medicationAdministrationDosage the medicationAdministration to map
-     * @return an updated version of the existingDrugOrder
-     */
-    @Override
-    FhirMedicationAdministrationDosage toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationDosageComponent medicationAdministrationDosage);
+	
+	/**
+	 * Maps an {@link FhirMedicationAdministrationDosage} to a
+	 * {@link MedicationAdministration.MedicationAdministrationDosageComponent} resource
+	 *
+	 * @param fhirMedicationAdministrationDosage the OpenMRS drugOrder to translate
+	 * @return the corresponding FHIR resource
+	 */
+	@Override
+	MedicationAdministration.MedicationAdministrationDosageComponent toFhirResource(
+	        @Nonnull FhirMedicationAdministrationDosage fhirMedicationAdministrationDosage);
+	
+	/**
+	 * Maps a {@link MedicationAdministration.MedicationAdministrationDosageComponent}
+	 * medicationAdministration to an existing {@link FhirMedicationAdministrationDosage}
+	 *
+	 * @param medicationAdministrationDosage the medicationAdministration to map
+	 * @return an updated version of the existingDrugOrder
+	 */
+	@Override
+	FhirMedicationAdministrationDosage toOpenmrsType(
+	        @Nonnull MedicationAdministration.MedicationAdministrationDosageComponent medicationAdministrationDosage);
 }

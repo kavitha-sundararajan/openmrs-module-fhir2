@@ -15,25 +15,27 @@ import org.hl7.fhir.r4.model.MedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 
 public interface MedicationAdministrationStatusTranslator extends OpenmrsFhirTranslator<FhirMedicationAdministration.MedicationAdministrationStatus, MedicationAdministration.MedicationAdministrationStatus> {
-
-    /**
-     * Maps an {@link org.openmrs.module.fhir2.model.FhirMedicationAdministration} to a {@link MedicationAdministration.MedicationAdministrationStatus}
-     * resource
-     *
-     * @param fhirMedicationAdministrationStatus the OpenMRS drugOrder to translate
-     * @return the corresponding FHIR resource
-     */
-    @Override
-    MedicationAdministration.MedicationAdministrationStatus toFhirResource(@Nonnull FhirMedicationAdministration.MedicationAdministrationStatus fhirMedicationAdministrationStatus);
-
-    /**
-     * Maps a {@link MedicationAdministration} medicationAdministration to an existing
-     * {@link FhirMedicationAdministration}
-     *
-     * @param medicationAdministrationStatus the medicationAdministration to map
-     * @return an updated version of the existingDrugOrder
-     */
-    @Override
-    FhirMedicationAdministration.MedicationAdministrationStatus toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationStatus medicationAdministrationStatus);
-
+	
+	/**
+	 * Maps an {@link org.openmrs.module.fhir2.model.FhirMedicationAdministration} to a
+	 * {@link MedicationAdministration.MedicationAdministrationStatus} resource
+	 *
+	 * @param fhirMedicationAdministrationStatus the OpenMRS drugOrder to translate
+	 * @return the corresponding FHIR resource
+	 */
+	@Override
+	MedicationAdministration.MedicationAdministrationStatus toFhirResource(
+	        @Nonnull FhirMedicationAdministration.MedicationAdministrationStatus fhirMedicationAdministrationStatus);
+	
+	/**
+	 * Maps a {@link MedicationAdministration} medicationAdministration to an existing
+	 * {@link FhirMedicationAdministration}
+	 *
+	 * @param medicationAdministrationStatus the medicationAdministration to map
+	 * @return an updated version of the existingDrugOrder
+	 */
+	@Override
+	FhirMedicationAdministration.MedicationAdministrationStatus toOpenmrsType(
+	        @Nonnull MedicationAdministration.MedicationAdministrationStatus medicationAdministrationStatus);
+	
 }

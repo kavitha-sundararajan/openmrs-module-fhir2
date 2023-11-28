@@ -9,30 +9,30 @@
  */
 package org.openmrs.module.fhir2.api.dao;
 
-import org.openmrs.DrugOrder;
+import javax.annotation.Nonnull;
+
+import java.util.List;
+
 import org.openmrs.annotation.Authorized;
 import org.openmrs.module.fhir2.api.search.param.SearchParameterMap;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 import org.openmrs.util.PrivilegeConstants;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
 public interface FhirMedicationAdministrationDao extends FhirDao<FhirMedicationAdministration> {
-
-    @Override
-    @Authorized(PrivilegeConstants.GET_ORDERS)
-    FhirMedicationAdministration get(@Nonnull String uuid);
-
-    @Override
-    @Authorized({ PrivilegeConstants.ADD_ORDERS, PrivilegeConstants.EDIT_ORDERS })
-    FhirMedicationAdministration createOrUpdate(@Nonnull FhirMedicationAdministration newEntry);
-
-    @Override
-    @Authorized(PrivilegeConstants.DELETE_ORDERS)
-    FhirMedicationAdministration delete(@Nonnull String uuid);
-
-    @Override
-    @Authorized(PrivilegeConstants.GET_ORDERS)
-    List<FhirMedicationAdministration> getSearchResults(@Nonnull SearchParameterMap theParams);
+	
+	@Override
+	@Authorized(PrivilegeConstants.GET_ORDERS)
+	FhirMedicationAdministration get(@Nonnull String uuid);
+	
+	@Override
+	@Authorized({ PrivilegeConstants.ADD_ORDERS, PrivilegeConstants.EDIT_ORDERS })
+	FhirMedicationAdministration createOrUpdate(@Nonnull FhirMedicationAdministration newEntry);
+	
+	@Override
+	@Authorized(PrivilegeConstants.DELETE_ORDERS)
+	FhirMedicationAdministration delete(@Nonnull String uuid);
+	
+	@Override
+	@Authorized(PrivilegeConstants.GET_ORDERS)
+	List<FhirMedicationAdministration> getSearchResults(@Nonnull SearchParameterMap theParams);
 }

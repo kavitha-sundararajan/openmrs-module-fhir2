@@ -54,11 +54,11 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	@Column(name = "status", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private MedicationAdministrationStatus status;
-
+	
 	/**
-	 * A specific date/time or interval of time during which the administration took place (or did not take place,
-	 * when the 'notGiven' attribute is true). For many administrations, such as swallowing a tablet the use of
-	 * dateTime is more appropriate.
+	 * A specific date/time or interval of time during which the administration took place (or did not
+	 * take place, when the 'notGiven' attribute is true). For many administrations, such as swallowing
+	 * a tablet the use of dateTime is more appropriate.
 	 */
 	@Column(name = "effective_date_time", nullable = false)
 	private Date effectiveDateTime;

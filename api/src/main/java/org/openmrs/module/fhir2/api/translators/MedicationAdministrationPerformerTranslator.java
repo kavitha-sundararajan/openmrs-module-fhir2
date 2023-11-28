@@ -9,32 +9,34 @@
  */
 package org.openmrs.module.fhir2.api.translators;
 
+import javax.annotation.Nonnull;
+
 import org.hl7.fhir.r4.model.MedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministrationPerformer;
 
-import javax.annotation.Nonnull;
-
 public interface MedicationAdministrationPerformerTranslator extends OpenmrsFhirTranslator<FhirMedicationAdministrationPerformer, MedicationAdministration.MedicationAdministrationPerformerComponent> {
-
-    /**
-     * Maps an {@link FhirMedicationAdministrationPerformer} to a {@link MedicationAdministration.MedicationAdministrationPerformerComponent}
-     * resource
-     *
-     * @param fhirMedicationAdministrationPerformer the OpenMRS drugOrder to translate
-     * @return the corresponding FHIR resource
-     */
-    @Override
-    MedicationAdministration.MedicationAdministrationPerformerComponent toFhirResource(@Nonnull FhirMedicationAdministrationPerformer fhirMedicationAdministrationPerformer);
-
-    /**
-     * Maps a {@link MedicationAdministration} medicationAdministration to an existing
-     * {@link FhirMedicationAdministration}
-     *
-     * @param medicationAdministrationPerformer the medicationAdministration to map
-     * @return an updated version of the existingDrugOrder
-     */
-    @Override
-    FhirMedicationAdministrationPerformer toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationPerformerComponent medicationAdministrationPerformer);
-
+	
+	/**
+	 * Maps an {@link FhirMedicationAdministrationPerformer} to a
+	 * {@link MedicationAdministration.MedicationAdministrationPerformerComponent} resource
+	 *
+	 * @param fhirMedicationAdministrationPerformer the OpenMRS drugOrder to translate
+	 * @return the corresponding FHIR resource
+	 */
+	@Override
+	MedicationAdministration.MedicationAdministrationPerformerComponent toFhirResource(
+	        @Nonnull FhirMedicationAdministrationPerformer fhirMedicationAdministrationPerformer);
+	
+	/**
+	 * Maps a {@link MedicationAdministration} medicationAdministration to an existing
+	 * {@link FhirMedicationAdministration}
+	 *
+	 * @param medicationAdministrationPerformer the medicationAdministration to map
+	 * @return an updated version of the existingDrugOrder
+	 */
+	@Override
+	FhirMedicationAdministrationPerformer toOpenmrsType(
+	        @Nonnull MedicationAdministration.MedicationAdministrationPerformerComponent medicationAdministrationPerformer);
+	
 }

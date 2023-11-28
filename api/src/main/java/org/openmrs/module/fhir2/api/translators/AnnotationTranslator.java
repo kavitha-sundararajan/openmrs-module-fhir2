@@ -9,30 +9,28 @@
  */
 package org.openmrs.module.fhir2.api.translators;
 
+import javax.annotation.Nonnull;
+
 import org.hl7.fhir.r4.model.Annotation;
 import org.openmrs.module.fhir2.model.FhirAnnotation;
 
-import javax.annotation.Nonnull;
-
 public interface AnnotationTranslator extends OpenmrsFhirTranslator<FhirAnnotation, Annotation> {
-
-    /**
-     * Maps an {@link FhirAnnotation} to a {@link Annotation}
-     * resource
-     *
-     * @param fhirAnnotation the OpenMRS drugOrder to translate
-     * @return the corresponding FHIR resource
-     */
-    @Override
-    Annotation toFhirResource(@Nonnull FhirAnnotation fhirAnnotation);
-
-    /**
-     * Maps a {@link Annotation} medicationAdministration to an existing
-     * {@link FhirAnnotation}
-     *
-     * @param annotation the medicationAdministration to map
-     * @return an updated version of the existingDrugOrder
-     */
-    @Override
-    FhirAnnotation toOpenmrsType(@Nonnull Annotation annotation);
+	
+	/**
+	 * Maps an {@link FhirAnnotation} to a {@link Annotation} resource
+	 *
+	 * @param fhirAnnotation the OpenMRS drugOrder to translate
+	 * @return the corresponding FHIR resource
+	 */
+	@Override
+	Annotation toFhirResource(@Nonnull FhirAnnotation fhirAnnotation);
+	
+	/**
+	 * Maps a {@link Annotation} medicationAdministration to an existing {@link FhirAnnotation}
+	 *
+	 * @param annotation the medicationAdministration to map
+	 * @return an updated version of the existingDrugOrder
+	 */
+	@Override
+	FhirAnnotation toOpenmrsType(@Nonnull Annotation annotation);
 }

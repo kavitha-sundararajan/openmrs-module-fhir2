@@ -9,11 +9,11 @@
  */
 package org.openmrs.module.fhir2.model;
 
+import javax.persistence.*;
+
 import lombok.*;
 import org.openmrs.BaseOpenmrsMetadata;
 import org.openmrs.Concept;
-
-import javax.persistence.*;
 
 /**
  * FHIR MedicationAdministration.dosage -
@@ -24,17 +24,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @MappedSuperclass
 public class FhirPerformer extends BaseOpenmrsMetadata {
-
+	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "performer_id")
 	protected Integer id;
-
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "actor_reference_id", referencedColumnName = "reference_id", nullable = false)
 	protected FhirReference actorReference;
-
+	
 	@OneToOne
 	@JoinColumn(name = "function", referencedColumnName = "concept_id")
 	protected Concept function;

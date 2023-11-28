@@ -9,6 +9,8 @@
  */
 package org.openmrs.module.fhir2.api.translators.impl;
 
+import javax.annotation.Nonnull;
+
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.hl7.fhir.r4.model.MedicationAdministration;
@@ -19,42 +21,44 @@ import org.openmrs.module.fhir2.model.FhirMedicationAdministrationPerformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
-
 @Component
 @Setter(AccessLevel.PACKAGE)
 public class MedicationAdministrationPerformerTranslatorImpl implements MedicationAdministrationPerformerTranslator {
-
-    @Autowired
-    private ReferenceTranslator referenceTranslator;
-
-    @Autowired
-    private ConceptTranslator conceptTranslator;
-
-    @Override
-    public MedicationAdministration.MedicationAdministrationPerformerComponent toFhirResource(@Nonnull FhirMedicationAdministrationPerformer fhirMedicationAdministrationPerformer) {
-            MedicationAdministration.MedicationAdministrationPerformerComponent performerComponent = null;
-
-        if (fhirMedicationAdministrationPerformer != null) {
-            performerComponent = new MedicationAdministration.MedicationAdministrationPerformerComponent();
-            performerComponent.setActor(referenceTranslator.toFhirResource(fhirMedicationAdministrationPerformer.getActorReference()));
-            performerComponent.setFunction(conceptTranslator.toFhirResource(fhirMedicationAdministrationPerformer.getFunction()));
-        }
-
-        return performerComponent;
-    }
-
-    @Override
-    public FhirMedicationAdministrationPerformer toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationPerformerComponent medicationAdministrationPerformer) {
-        FhirMedicationAdministrationPerformer performer = null;
-
-        if (medicationAdministrationPerformer != null) {
-            performer = new FhirMedicationAdministrationPerformer();
-            performer.setActorReference(referenceTranslator.toOpenmrsType(medicationAdministrationPerformer.getActor()));
-            performer.setFunction(conceptTranslator.toOpenmrsType(medicationAdministrationPerformer.getFunction()));
-        }
-
-        return performer;
-    }
-
+	
+	@Autowired
+	private ReferenceTranslator referenceTranslator;
+	
+	@Autowired
+	private ConceptTranslator conceptTranslator;
+	
+	@Override
+	public MedicationAdministration.MedicationAdministrationPerformerComponent toFhirResource(
+	        @Nonnull FhirMedicationAdministrationPerformer fhirMedicationAdministrationPerformer) {
+		MedicationAdministration.MedicationAdministrationPerformerComponent performerComponent = null;
+		
+		if (fhirMedicationAdministrationPerformer != null) {
+			performerComponent = new MedicationAdministration.MedicationAdministrationPerformerComponent();
+			performerComponent
+			        .setActor(referenceTranslator.toFhirResource(fhirMedicationAdministrationPerformer.getActorReference()));
+			performerComponent
+			        .setFunction(conceptTranslator.toFhirResource(fhirMedicationAdministrationPerformer.getFunction()));
+		}
+		
+		return performerComponent;
+	}
+	
+	@Override
+	public FhirMedicationAdministrationPerformer toOpenmrsType(
+	        @Nonnull MedicationAdministration.MedicationAdministrationPerformerComponent medicationAdministrationPerformer) {
+		FhirMedicationAdministrationPerformer performer = null;
+		
+		if (medicationAdministrationPerformer != null) {
+			performer = new FhirMedicationAdministrationPerformer();
+			performer.setActorReference(referenceTranslator.toOpenmrsType(medicationAdministrationPerformer.getActor()));
+			performer.setFunction(conceptTranslator.toOpenmrsType(medicationAdministrationPerformer.getFunction()));
+		}
+		
+		return performer;
+	}
+	
 }

@@ -9,6 +9,8 @@
  */
 package org.openmrs.module.fhir2.api.translators.impl;
 
+import javax.annotation.Nonnull;
+
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.hl7.fhir.r4.model.MedicationAdministration;
@@ -18,40 +20,40 @@ import org.openmrs.module.fhir2.model.FhirMedicationAdministrationDosage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
-
 @Component
 @Setter(AccessLevel.PACKAGE)
 public class MedicationAdministrationDosageTranslatorImpl implements MedicationAdministrationDosageTranslator {
-
-    @Autowired
-    private ConceptTranslator conceptTranslator;
-
-    @Override
-    public MedicationAdministration.MedicationAdministrationDosageComponent toFhirResource(@Nonnull FhirMedicationAdministrationDosage fhirMedicationAdministrationDosage) {
-        MedicationAdministration.MedicationAdministrationDosageComponent dosageComponent = null;
-
-        if (fhirMedicationAdministrationDosage != null) {
-            dosageComponent = new MedicationAdministration.MedicationAdministrationDosageComponent();
-            dosageComponent.setText(fhirMedicationAdministrationDosage.getText());
-            dosageComponent.setSite(conceptTranslator.toFhirResource(fhirMedicationAdministrationDosage.getSite()));
-            dosageComponent.setRoute(conceptTranslator.toFhirResource(fhirMedicationAdministrationDosage.getRoute()));
-        }
-
-        return dosageComponent;
-    }
-
-    @Override
-    public FhirMedicationAdministrationDosage toOpenmrsType(@Nonnull MedicationAdministration.MedicationAdministrationDosageComponent medicationAdministrationDosage) {
-        FhirMedicationAdministrationDosage dosage = null;
-
-        if (medicationAdministrationDosage != null) {
-            dosage = new FhirMedicationAdministrationDosage();
-            dosage.setText(medicationAdministrationDosage.getText());
-            dosage.setSite(conceptTranslator.toOpenmrsType(medicationAdministrationDosage.getSite()));
-            dosage.setRoute(conceptTranslator.toOpenmrsType(medicationAdministrationDosage.getRoute()));
-        }
-
-        return dosage;
-    }
+	
+	@Autowired
+	private ConceptTranslator conceptTranslator;
+	
+	@Override
+	public MedicationAdministration.MedicationAdministrationDosageComponent toFhirResource(
+	        @Nonnull FhirMedicationAdministrationDosage fhirMedicationAdministrationDosage) {
+		MedicationAdministration.MedicationAdministrationDosageComponent dosageComponent = null;
+		
+		if (fhirMedicationAdministrationDosage != null) {
+			dosageComponent = new MedicationAdministration.MedicationAdministrationDosageComponent();
+			dosageComponent.setText(fhirMedicationAdministrationDosage.getText());
+			dosageComponent.setSite(conceptTranslator.toFhirResource(fhirMedicationAdministrationDosage.getSite()));
+			dosageComponent.setRoute(conceptTranslator.toFhirResource(fhirMedicationAdministrationDosage.getRoute()));
+		}
+		
+		return dosageComponent;
+	}
+	
+	@Override
+	public FhirMedicationAdministrationDosage toOpenmrsType(
+	        @Nonnull MedicationAdministration.MedicationAdministrationDosageComponent medicationAdministrationDosage) {
+		FhirMedicationAdministrationDosage dosage = null;
+		
+		if (medicationAdministrationDosage != null) {
+			dosage = new FhirMedicationAdministrationDosage();
+			dosage.setText(medicationAdministrationDosage.getText());
+			dosage.setSite(conceptTranslator.toOpenmrsType(medicationAdministrationDosage.getSite()));
+			dosage.setRoute(conceptTranslator.toOpenmrsType(medicationAdministrationDosage.getRoute()));
+		}
+		
+		return dosage;
+	}
 }

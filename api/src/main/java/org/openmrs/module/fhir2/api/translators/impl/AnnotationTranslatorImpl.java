@@ -9,49 +9,49 @@
  */
 package org.openmrs.module.fhir2.api.translators.impl;
 
+import javax.annotation.Nonnull;
+
 import lombok.AccessLevel;
 import lombok.Setter;
+import org.hl7.fhir.r4.model.Annotation;
 import org.openmrs.module.fhir2.api.translators.AnnotationTranslator;
 import org.openmrs.module.fhir2.api.translators.ReferenceTranslator;
 import org.openmrs.module.fhir2.model.FhirAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.hl7.fhir.r4.model.Annotation;
-
-import javax.annotation.Nonnull;
 
 @Component
 @Setter(AccessLevel.PACKAGE)
 public class AnnotationTranslatorImpl implements AnnotationTranslator {
-
-    @Autowired
-    private ReferenceTranslator referenceTranslator;
-
-    @Override
-    public Annotation toFhirResource(@Nonnull FhirAnnotation fhirAnnotation) {
-        Annotation annotation = null;
-
-        if (fhirAnnotation != null) {
-            annotation = new Annotation();
-            annotation.setText(fhirAnnotation.getText());
-            annotation.setAuthor(referenceTranslator.toFhirResource(fhirAnnotation.getAuthorReference()));
-            annotation.setTime(fhirAnnotation.getTime());
-        }
-
-        return annotation;
-    }
-
-    @Override
-    public FhirAnnotation toOpenmrsType(@Nonnull Annotation annotation) {
-        FhirAnnotation fhirAnnotation = null;
-
-        if (annotation != null) {
-            fhirAnnotation = new FhirAnnotation();
-            fhirAnnotation.setText(annotation.getText());
-            fhirAnnotation.setAuthorReference(referenceTranslator.toOpenmrsType(annotation.getAuthorReference()));
-            fhirAnnotation.setTime(annotation.getTime());
-        }
-
-        return fhirAnnotation;
-    }
+	
+	@Autowired
+	private ReferenceTranslator referenceTranslator;
+	
+	@Override
+	public Annotation toFhirResource(@Nonnull FhirAnnotation fhirAnnotation) {
+		Annotation annotation = null;
+		
+		if (fhirAnnotation != null) {
+			annotation = new Annotation();
+			annotation.setText(fhirAnnotation.getText());
+			annotation.setAuthor(referenceTranslator.toFhirResource(fhirAnnotation.getAuthorReference()));
+			annotation.setTime(fhirAnnotation.getTime());
+		}
+		
+		return annotation;
+	}
+	
+	@Override
+	public FhirAnnotation toOpenmrsType(@Nonnull Annotation annotation) {
+		FhirAnnotation fhirAnnotation = null;
+		
+		if (annotation != null) {
+			fhirAnnotation = new FhirAnnotation();
+			fhirAnnotation.setText(annotation.getText());
+			fhirAnnotation.setAuthorReference(referenceTranslator.toOpenmrsType(annotation.getAuthorReference()));
+			fhirAnnotation.setTime(annotation.getTime());
+		}
+		
+		return fhirAnnotation;
+	}
 }

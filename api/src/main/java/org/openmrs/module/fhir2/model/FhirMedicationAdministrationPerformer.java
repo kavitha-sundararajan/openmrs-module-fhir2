@@ -9,13 +9,11 @@
  */
 package org.openmrs.module.fhir2.model;
 
+import javax.persistence.*;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.openmrs.BaseOpenmrsMetadata;
-import org.openmrs.Concept;
-
-import javax.persistence.*;
 
 /**
  * FHIR MedicationAdministration.dosage -
@@ -29,7 +27,7 @@ import javax.persistence.*;
 public class FhirMedicationAdministrationPerformer extends FhirPerformer {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "medication_administration_id", nullable = false)
 	private FhirMedicationAdministration medicationAdministration;

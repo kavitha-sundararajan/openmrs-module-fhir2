@@ -9,42 +9,42 @@
  */
 package org.openmrs.module.fhir2.api.translators;
 
+import javax.annotation.Nonnull;
+
 import org.hl7.fhir.r4.model.MedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 
-import javax.annotation.Nonnull;
-
 public interface MedicationAdministrationTranslator extends ToFhirTranslator<FhirMedicationAdministration, MedicationAdministration>, OpenmrsFhirUpdatableTranslator<FhirMedicationAdministration, MedicationAdministration> {
-
-    /**
-     * Maps a {@link FhirMedicationAdministration} to a {@link MedicationAdministration}
-     * resource
-     *
-     * @param fhirMedicationAdministration the OpenMRS drugOrder to translate
-     * @return the corresponding FHIR MedicationAdministration resource
-     */
-    @Override
-    MedicationAdministration toFhirResource(@Nonnull FhirMedicationAdministration fhirMedicationAdministration);
-
-    /**
-     * Maps a {@link MedicationAdministration} medicationAdministration to an existing
-     * {@link FhirMedicationAdministration}
-     *
-     * @param existingFhirMedicationAdministration the existingDrugOrder to update
-     * @param medicationAdministration the medicationAdministration to map
-     * @return an updated version of the existingDrugOrder
-     */
-    @Override
-    FhirMedicationAdministration toOpenmrsType(@Nonnull FhirMedicationAdministration existingFhirMedicationAdministration, @Nonnull MedicationAdministration medicationAdministration);
-
-    /**
-     * Maps a {@link MedicationAdministration} medicationAdministration to an existing
-     * {@link FhirMedicationAdministration}
-     *
-     * @param medicationAdministration the medicationAdministration to map
-     * @return an updated version of the existingDrugOrder
-     */
-    @Override
-    FhirMedicationAdministration toOpenmrsType(@Nonnull MedicationAdministration medicationAdministration);
-
+	
+	/**
+	 * Maps a {@link FhirMedicationAdministration} to a {@link MedicationAdministration} resource
+	 *
+	 * @param fhirMedicationAdministration the OpenMRS drugOrder to translate
+	 * @return the corresponding FHIR MedicationAdministration resource
+	 */
+	@Override
+	MedicationAdministration toFhirResource(@Nonnull FhirMedicationAdministration fhirMedicationAdministration);
+	
+	/**
+	 * Maps a {@link MedicationAdministration} medicationAdministration to an existing
+	 * {@link FhirMedicationAdministration}
+	 *
+	 * @param existingFhirMedicationAdministration the existingDrugOrder to update
+	 * @param medicationAdministration the medicationAdministration to map
+	 * @return an updated version of the existingDrugOrder
+	 */
+	@Override
+	FhirMedicationAdministration toOpenmrsType(@Nonnull FhirMedicationAdministration existingFhirMedicationAdministration,
+	        @Nonnull MedicationAdministration medicationAdministration);
+	
+	/**
+	 * Maps a {@link MedicationAdministration} medicationAdministration to an existing
+	 * {@link FhirMedicationAdministration}
+	 *
+	 * @param medicationAdministration the medicationAdministration to map
+	 * @return an updated version of the existingDrugOrder
+	 */
+	@Override
+	FhirMedicationAdministration toOpenmrsType(@Nonnull MedicationAdministration medicationAdministration);
+	
 }
