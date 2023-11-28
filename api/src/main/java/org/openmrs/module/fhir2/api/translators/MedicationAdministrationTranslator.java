@@ -10,8 +10,6 @@
 package org.openmrs.module.fhir2.api.translators;
 
 import org.hl7.fhir.r4.model.MedicationAdministration;
-import org.openmrs.DrugOrder;
-import org.openmrs.module.fhir2.api.dao.FhirMedicationAdministrationDao;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 
 import javax.annotation.Nonnull;
@@ -19,7 +17,7 @@ import javax.annotation.Nonnull;
 public interface MedicationAdministrationTranslator extends ToFhirTranslator<FhirMedicationAdministration, MedicationAdministration>, OpenmrsFhirUpdatableTranslator<FhirMedicationAdministration, MedicationAdministration> {
 
     /**
-     * Maps a {@link DrugOrder} to a {@link org.hl7.fhir.r4.model.MedicationRequest}
+     * Maps a {@link FhirMedicationAdministration} to a {@link MedicationAdministration}
      * resource
      *
      * @param fhirMedicationAdministration the OpenMRS drugOrder to translate
@@ -30,7 +28,7 @@ public interface MedicationAdministrationTranslator extends ToFhirTranslator<Fhi
 
     /**
      * Maps a {@link MedicationAdministration} medicationAdministration to an existing
-     * {@link DrugOrder}
+     * {@link FhirMedicationAdministration}
      *
      * @param existingFhirMedicationAdministration the existingDrugOrder to update
      * @param medicationAdministration the medicationAdministration to map
@@ -41,7 +39,7 @@ public interface MedicationAdministrationTranslator extends ToFhirTranslator<Fhi
 
     /**
      * Maps a {@link MedicationAdministration} medicationAdministration to an existing
-     * {@link DrugOrder}
+     * {@link FhirMedicationAdministration}
      *
      * @param medicationAdministration the medicationAdministration to map
      * @return an updated version of the existingDrugOrder

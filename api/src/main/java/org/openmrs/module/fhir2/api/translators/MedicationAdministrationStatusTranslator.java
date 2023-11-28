@@ -12,7 +12,6 @@ package org.openmrs.module.fhir2.api.translators;
 import javax.annotation.Nonnull;
 
 import org.hl7.fhir.r4.model.MedicationAdministration;
-import org.openmrs.DrugOrder;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 
 public interface MedicationAdministrationStatusTranslator extends OpenmrsFhirTranslator<FhirMedicationAdministration.MedicationAdministrationStatus, MedicationAdministration.MedicationAdministrationStatus> {

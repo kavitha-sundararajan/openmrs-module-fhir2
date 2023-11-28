@@ -1178,7 +1178,9 @@
             <column name="uuid" type="varchar(38)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="date_created" type="datetime"/>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
             <column name="date_changed" type="datetime"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="fhir_annotation" baseColumnNames="author_reference_id"

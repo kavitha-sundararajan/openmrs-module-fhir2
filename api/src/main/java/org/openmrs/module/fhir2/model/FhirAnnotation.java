@@ -52,7 +52,7 @@ public class FhirAnnotation extends BaseOpenmrsMetadata {
 	@Column(name = "text")
 	private String text;
 
-	@Column(name = "date_created")
+	@Column(name = "date_created", insertable = false, updatable = false)
 	private Date time;
 	
 }

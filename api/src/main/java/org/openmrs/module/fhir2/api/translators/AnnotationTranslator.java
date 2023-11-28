@@ -10,10 +10,7 @@
 package org.openmrs.module.fhir2.api.translators;
 
 import org.hl7.fhir.r4.model.Annotation;
-import org.hl7.fhir.r4.model.MedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirAnnotation;
-import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
-import org.openmrs.module.fhir2.model.FhirMedicationAdministrationDosage;
 
 import javax.annotation.Nonnull;
 

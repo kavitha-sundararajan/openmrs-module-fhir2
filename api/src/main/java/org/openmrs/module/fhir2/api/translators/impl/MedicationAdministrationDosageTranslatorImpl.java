@@ -9,12 +9,11 @@
  */
 package org.openmrs.module.fhir2.api.translators.impl;
 
+import lombok.AccessLevel;
+import lombok.Setter;
 import org.hl7.fhir.r4.model.MedicationAdministration;
-import org.openmrs.annotation.OpenmrsProfile;
 import org.openmrs.module.fhir2.api.translators.ConceptTranslator;
 import org.openmrs.module.fhir2.api.translators.MedicationAdministrationDosageTranslator;
-import org.openmrs.module.fhir2.api.translators.MedicationAdministrationStatusTranslator;
-import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministrationDosage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Nonnull;
 
 @Component
-@OpenmrsProfile(openmrsPlatformVersion = "2.0.5 - 2.1.*")
+@Setter(AccessLevel.PACKAGE)
 public class MedicationAdministrationDosageTranslatorImpl implements MedicationAdministrationDosageTranslator {
 
     @Autowired

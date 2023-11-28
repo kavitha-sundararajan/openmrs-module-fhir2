@@ -9,7 +9,8 @@
  */
 package org.openmrs.module.fhir2.api.translators.impl;
 
-import org.openmrs.annotation.OpenmrsProfile;
+import lombok.AccessLevel;
+import lombok.Setter;
 import org.openmrs.module.fhir2.api.translators.AnnotationTranslator;
 import org.openmrs.module.fhir2.api.translators.ReferenceTranslator;
 import org.openmrs.module.fhir2.model.FhirAnnotation;
@@ -20,7 +21,7 @@ import org.hl7.fhir.r4.model.Annotation;
 import javax.annotation.Nonnull;
 
 @Component
-@OpenmrsProfile(openmrsPlatformVersion = "2.0.5 - 2.1.*")
+@Setter(AccessLevel.PACKAGE)
 public class AnnotationTranslatorImpl implements AnnotationTranslator {
 
     @Autowired

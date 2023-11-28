@@ -11,21 +11,22 @@ package org.openmrs.module.fhir2.api.translators.impl;
 
 import lombok.AccessLevel;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
-import org.hl7.fhir.r4.model.*;
-import org.openmrs.Encounter;
-import org.openmrs.*;
-import org.openmrs.module.fhir2.api.translators.*;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.MedicationAdministration;
+import org.openmrs.module.fhir2.api.translators.MedicationAdministrationPerformerTranslator;
+import org.openmrs.module.fhir2.api.translators.MedicationAdministrationStatusTranslator;
+import org.openmrs.module.fhir2.api.translators.MedicationAdministrationTranslator;
+import org.openmrs.module.fhir2.api.translators.MedicationAdministrationDosageTranslator;
+import org.openmrs.module.fhir2.api.translators.ReferenceTranslator;
+import org.openmrs.module.fhir2.api.translators.AnnotationTranslator;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.Validate.notNull;
-import static org.openmrs.module.fhir2.FhirConstants.OPENMRS_FHIR_EXT_MEDICATION_REQUEST_FULFILLER_STATUS;
 import static org.openmrs.module.fhir2.api.translators.impl.FhirTranslatorUtils.getLastUpdated;
 import static org.openmrs.module.fhir2.api.translators.impl.FhirTranslatorUtils.getVersionId;
 

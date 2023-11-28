@@ -11,17 +11,15 @@ package org.openmrs.module.fhir2.api.translators.impl;
 
 import javax.annotation.Nonnull;
 
+import lombok.AccessLevel;
+import lombok.Setter;
 import org.hl7.fhir.r4.model.MedicationAdministration;
-import org.hl7.fhir.r4.model.MedicationRequest;
-import org.openmrs.DrugOrder;
-import org.openmrs.annotation.OpenmrsProfile;
 import org.openmrs.module.fhir2.api.translators.MedicationAdministrationStatusTranslator;
-import org.openmrs.module.fhir2.api.translators.MedicationRequestStatusTranslator;
 import org.openmrs.module.fhir2.model.FhirMedicationAdministration;
 import org.springframework.stereotype.Component;
 
 @Component
-@OpenmrsProfile(openmrsPlatformVersion = "2.0.5 - 2.1.*")
+@Setter(AccessLevel.PACKAGE)
 public class MedicationAdministrationStatusTranslatorImpl implements MedicationAdministrationStatusTranslator {
 
     @Override
