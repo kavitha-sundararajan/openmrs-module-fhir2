@@ -1117,6 +1117,7 @@
             <column name="medication_reference_id" type="int"/>
             <column name="subject_reference_id" type="int"/>
             <column name="request_reference_id" type="int"/>
+            <column name="context_reference_id" type="int"/>
             <column name="dosage_id" type="int"/>
             <column name="creator" type="int">
                 <constraints nullable="false"/>
@@ -1149,6 +1150,10 @@
                                  referencedColumnNames="reference_id"/>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="subject_reference_id"
                                  constraintName="medication_subject_reference_fk"
+                                 referencedTableName="fhir_reference"
+                                 referencedColumnNames="reference_id"/>
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="context_reference_id"
+                                 constraintName="medication_context_reference_fk"
                                  referencedTableName="fhir_reference"
                                  referencedColumnNames="reference_id"/>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="request_reference_id"
@@ -1233,12 +1238,12 @@
     <changeSet id="add_based_on_ref_join_table_with_med_adm_20231103" author="kavitha">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
-                <tableExists tableName="fhir_medication_administration_based_on_reference"/>
+                <tableExists tableName="fhir_medication_administration_reference"/>
             </not>
             <tableExists tableName="fhir_medication_administration"/>
             <tableExists tableName="fhir_reference"/>
         </preConditions>
-        <createTable tableName="fhir_medication_administration_based_on_reference">
+        <createTable tableName="fhir_medication_administration_reference">
             <column name="medication_administration_id" type="int">
                 <constraints nullable="false"/>
             </column>
@@ -1246,11 +1251,11 @@
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="fhir_medication_administration_based_on_reference" baseColumnNames="medication_administration_id"
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_reference" baseColumnNames="medication_administration_id"
                                  constraintName="medication_administration_based_on_fk"
                                  referencedTableName="fhir_medication_administration"
                                  referencedColumnNames="medication_administration_id"/>
-        <addForeignKeyConstraint baseTableName="fhir_medication_administration_based_on_reference" baseColumnNames="reference_id"
+        <addForeignKeyConstraint baseTableName="fhir_medication_administration_reference" baseColumnNames="reference_id"
                                  constraintName="med_adm_reference_based_on_fk"
                                  referencedTableName="fhir_reference"
                                  referencedColumnNames="reference_id"/>
@@ -1280,4 +1285,5 @@
                                  referencedTableName="fhir_reference"
                                  referencedColumnNames="reference_id"/>
     </changeSet>
+
 </databaseChangeLog>

@@ -60,6 +60,8 @@ public class MedicationAdministrationTranslatorImpl extends BaseReferenceHandlin
 		medicationAdministration.setStatus(statusTranslator.toFhirResource(fhirMedicationAdministration.getStatus()));
 		medicationAdministration
 		        .setSubject(referenceTranslator.toFhirResource(fhirMedicationAdministration.getSubjectReference()));
+		medicationAdministration
+		        .setContext(referenceTranslator.toFhirResource(fhirMedicationAdministration.getContextReference()));
 		
 		if (fhirMedicationAdministration.getPerformer() != null && !fhirMedicationAdministration.getPerformer().isEmpty()) {
 			medicationAdministration.setPerformer(fhirMedicationAdministration.getPerformer().stream()
@@ -73,6 +75,13 @@ public class MedicationAdministrationTranslatorImpl extends BaseReferenceHandlin
 		if (fhirMedicationAdministration.getNote() != null && !fhirMedicationAdministration.getNote().isEmpty()) {
 			medicationAdministration.setNote(fhirMedicationAdministration.getNote().stream()
 			        .map(annotationTranslator::toFhirResource).filter(obj -> obj != null).collect(Collectors.toList()));
+		}
+		
+		if (fhirMedicationAdministration.getSupportingInformation() != null
+		        && !fhirMedicationAdministration.getSupportingInformation().isEmpty()) {
+			medicationAdministration.setSupportingInformation(
+			    fhirMedicationAdministration.getSupportingInformation().stream().map(referenceTranslator::toFhirResource)
+			            .filter(obj -> obj != null).collect(Collectors.toList()));
 		}
 		
 		medicationAdministration.getMeta().setLastUpdated(getLastUpdated(fhirMedicationAdministration));
@@ -110,6 +119,10 @@ public class MedicationAdministrationTranslatorImpl extends BaseReferenceHandlin
 		
 		existingFhirMedicationAdministration
 		        .setSubjectReference(referenceTranslator.toOpenmrsType(medicationAdministration.getSubject()));
+		
+		existingFhirMedicationAdministration
+		        .setContextReference(referenceTranslator.toOpenmrsType(medicationAdministration.getContext()));
+		
 		if (medicationAdministration.getPerformer() != null && !medicationAdministration.getPerformer().isEmpty()) {
 			existingFhirMedicationAdministration.setPerformer(medicationAdministration.getPerformer().stream()
 			        .map(performerTranslator::toOpenmrsType).filter(obj -> obj != null).collect(Collectors.toSet()));
@@ -122,6 +135,13 @@ public class MedicationAdministrationTranslatorImpl extends BaseReferenceHandlin
 		if (medicationAdministration.getNote() != null && !medicationAdministration.getNote().isEmpty()) {
 			existingFhirMedicationAdministration.setNote(medicationAdministration.getNote().stream()
 			        .map(annotationTranslator::toOpenmrsType).filter(obj -> obj != null).collect(Collectors.toSet()));
+		}
+		
+		if (medicationAdministration.getSupportingInformation() != null
+		        && !medicationAdministration.getSupportingInformation().isEmpty()) {
+			existingFhirMedicationAdministration
+			        .setSupportingInformation(medicationAdministration.getSupportingInformation().stream()
+			                .map(referenceTranslator::toOpenmrsType).filter(obj -> obj != null).collect(Collectors.toSet()));
 		}
 		
 		return existingFhirMedicationAdministration;

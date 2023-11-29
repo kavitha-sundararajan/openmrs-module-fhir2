@@ -80,6 +80,13 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	private FhirReference subjectReference;
 	
 	/**
+	 * Encounter or Episode of Care administered as part of.
+	 */
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "context_reference_id", referencedColumnName = "reference_id")
+	private FhirReference contextReference;
+	
+	/**
 	 * Indicates who or what performed the medication administration and how they were involved.
 	 */
 	@OneToMany(cascade = CascadeType.ALL)
@@ -107,5 +114,12 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "medication_administration_id")
 	private Set<FhirAnnotation> note;
+	
+	/**
+	 * Additional information that supports the administration of the medication.
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "fhir_medication_administration_reference", joinColumns = @JoinColumn(name = "medication_administration_id"), inverseJoinColumns = @JoinColumn(name = "reference_id"))
+	private Set<FhirReference> supportingInformation;
 	
 }
