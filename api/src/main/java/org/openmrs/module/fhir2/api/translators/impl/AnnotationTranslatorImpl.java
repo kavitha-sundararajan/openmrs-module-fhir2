@@ -35,7 +35,7 @@ public class AnnotationTranslatorImpl implements AnnotationTranslator {
 			annotation = new Annotation();
 			annotation.setText(fhirAnnotation.getText());
 			annotation.setAuthor(referenceTranslator.toFhirResource(fhirAnnotation.getAuthorReference()));
-			annotation.setTime(fhirAnnotation.getTime());
+			annotation.setTime(fhirAnnotation.getDateCreated());
 		}
 		
 		return annotation;
@@ -48,8 +48,8 @@ public class AnnotationTranslatorImpl implements AnnotationTranslator {
 		if (annotation != null) {
 			fhirAnnotation = new FhirAnnotation();
 			fhirAnnotation.setText(annotation.getText());
-			fhirAnnotation.setAuthorReference(referenceTranslator.toOpenmrsType(annotation.getAuthorReference()));
-			fhirAnnotation.setTime(annotation.getTime());
+			//fhirAnnotation.setAuthorReference(referenceTranslator.toOpenmrsType(annotation.getAuthorReference()));
+			fhirAnnotation.setDateCreated(annotation.getTime());
 		}
 		
 		return fhirAnnotation;

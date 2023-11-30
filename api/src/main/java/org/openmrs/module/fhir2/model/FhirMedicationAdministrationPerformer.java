@@ -29,7 +29,7 @@ public class FhirMedicationAdministrationPerformer extends FhirPerformer {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	@JoinColumn(name = "medication_administration_id", nullable = false)
+	@JoinColumn(name = "medication_administration_id")
 	private FhirMedicationAdministration medicationAdministration;
 	
 }

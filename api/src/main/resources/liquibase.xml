@@ -1067,7 +1067,7 @@
             <column name="attribute_type_id" />
         </createIndex>
     </changeSet>
-    <changeSet id="add_fhir_medication_administration_dosage_20231103" author="kavitha">
+    <changeSet id="add_fhir_medication_administration_dosage_20231130" author="kavitha,kalai">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
                 <tableExists tableName="fhir_medication_administration_dosage"/>
@@ -1083,6 +1083,14 @@
             <column name="uuid" type="varchar(38)">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_by" type="int"/>
+            <column name="date_changed" type="datetime"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration_dosage" baseColumnNames="site"
                                  constraintName="fhir_medication_administration_dosage_site_fk"
@@ -1091,7 +1099,7 @@
                                  constraintName="fhir_medication_administration_dosage_route_fk"
                                  referencedTableName="concept" referencedColumnNames="concept_id"/>
     </changeSet>
-    <changeSet id="add_fhir_medication_administration_20231103" author="kavitha">
+    <changeSet id="add_fhir_medication_administration_20231130" author="kavitha,kalai">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
                 <tableExists tableName="fhir_medication_administration"/>
@@ -1127,12 +1135,12 @@
             </column>
             <column name="changed_by" type="int"/>
             <column name="date_changed" type="datetime"/>
-            <column name="retired" type="boolean" defaultValueBoolean="false">
+            <column name="voided" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
-            <column name="retired_by" type="int"/>
-            <column name="date_retired" type="datetime"/>
-            <column name="retire_reason" type="varchar(255)" defaultValue="null"/>
+            <column name="voided_by" type="int"/>
+            <column name="date_voided" type="datetime"/>
+            <column name="void_reason" type="varchar(255)" defaultValue="null"/>
         </createTable>
 
         <addForeignKeyConstraint constraintName="medication_administration_creator"
@@ -1165,7 +1173,7 @@
                                  referencedTableName="fhir_medication_administration_dosage"
                                  referencedColumnNames="dosage_id"/>
     </changeSet>
-    <changeSet id="add_fhir_annotation_20231103" author="kavitha">
+    <changeSet id="add_fhir_annotation_20231130" author="kavitha,kalai">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
                 <tableExists tableName="fhir_annotation"/>
@@ -1183,10 +1191,20 @@
             <column name="uuid" type="varchar(38)">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
             <column name="date_created" type="datetime">
                 <constraints nullable="false"/>
             </column>
+            <column name="changed_by" type="int"/>
             <column name="date_changed" type="datetime"/>
+            <column name="voided" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="voided_by" type="int"/>
+            <column name="date_voided" type="datetime"/>
+            <column name="void_reason" type="varchar(255)" defaultValue="null"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="fhir_annotation" baseColumnNames="author_reference_id"
                                  constraintName="annotation_author_reference_fk"
@@ -1197,7 +1215,7 @@
                                  referencedTableName="fhir_medication_administration"
                                  referencedColumnNames="medication_administration_id"/>
     </changeSet>
-    <changeSet id="add_fhir_medication_administration_performer_20231103" author="kavitha">
+    <changeSet id="add_fhir_medication_administration_performer_20231130" author="kavitha,kalai">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
                 <tableExists tableName="fhir_medication_administration_performer"/>
@@ -1209,9 +1227,7 @@
             <column name="performer_id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="medication_administration_id" type="int">
-                <constraints nullable="false"/>
-            </column>
+            <column name="medication_administration_id" type="int"/>
             <column name="actor_reference_id" type="int">
                 <constraints nullable="false"/>
             </column>
@@ -1219,7 +1235,13 @@
             <column name="uuid" type="varchar(38)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="date_created" type="datetime"/>
+            <column name="creator" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_by" type="int"/>
             <column name="date_changed" type="datetime"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration_performer" baseColumnNames="actor_reference_id"
@@ -1235,7 +1257,7 @@
                                  referencedTableName="concept"
                                  referencedColumnNames="concept_id"/>
     </changeSet>
-    <changeSet id="add_based_on_ref_join_table_with_med_adm_20231103" author="kavitha">
+    <changeSet id="add_based_on_ref_join_table_with_med_adm_20231130" author="kavitha,kalai">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
                 <tableExists tableName="fhir_medication_administration_reference"/>
@@ -1260,7 +1282,7 @@
                                  referencedTableName="fhir_reference"
                                  referencedColumnNames="reference_id"/>
     </changeSet>
-    <changeSet id="add_based_on_ref_join_table_with_annotation_20231103" author="kavitha">
+    <changeSet id="add_based_on_ref_join_table_with_annotation_20231130" author="kavitha,kalai">
         <preConditions onFail="MARK_RAN" onError="WARN">
             <not>
                 <tableExists tableName="fhir_annotation_based_on_reference"/>

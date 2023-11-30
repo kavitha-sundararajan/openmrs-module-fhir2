@@ -20,12 +20,10 @@ package org.openmrs.module.fhir2.model;
 
 import javax.persistence.*;
 
-import java.util.Date;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.BaseOpenmrsData;
 
 /**
  * FHIR Annotation -
@@ -35,7 +33,7 @@ import org.openmrs.BaseOpenmrsMetadata;
 @Setter
 @Entity
 @Table(name = "fhir_annotation")
-public class FhirAnnotation extends BaseOpenmrsMetadata {
+public class FhirAnnotation extends BaseOpenmrsData {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -51,8 +49,5 @@ public class FhirAnnotation extends BaseOpenmrsMetadata {
 	
 	@Column(name = "text")
 	private String text;
-	
-	@Column(name = "date_created", insertable = false, updatable = false)
-	private Date time;
 	
 }

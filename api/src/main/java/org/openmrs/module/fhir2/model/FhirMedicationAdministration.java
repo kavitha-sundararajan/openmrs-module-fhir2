@@ -17,14 +17,14 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.BaseOpenmrsData;
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "fhir_medication_administration")
-public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
+public class FhirMedicationAdministration extends BaseOpenmrsData {
 	
 	// Based on https://www.hl7.org/fhir/task.html v4.0.1
 	public enum MedicationAdministrationStatus {
@@ -89,8 +89,7 @@ public class FhirMedicationAdministration extends BaseOpenmrsMetadata {
 	/**
 	 * Indicates who or what performed the medication administration and how they were involved.
 	 */
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "medication_administration_id")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicationAdministration")
 	private Set<FhirMedicationAdministrationPerformer> performer;
 	
 	/**

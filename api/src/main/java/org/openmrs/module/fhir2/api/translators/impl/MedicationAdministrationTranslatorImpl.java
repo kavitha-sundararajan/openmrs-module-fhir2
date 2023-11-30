@@ -120,25 +120,30 @@ public class MedicationAdministrationTranslatorImpl extends BaseReferenceHandlin
 		existingFhirMedicationAdministration
 		        .setSubjectReference(referenceTranslator.toOpenmrsType(medicationAdministration.getSubject()));
 		
-		existingFhirMedicationAdministration
-		        .setContextReference(referenceTranslator.toOpenmrsType(medicationAdministration.getContext()));
+		if (medicationAdministration.hasContext()) {
+			existingFhirMedicationAdministration
+			        .setContextReference(referenceTranslator.toOpenmrsType(medicationAdministration.getContext()));
+		}
 		
-		if (medicationAdministration.getPerformer() != null && !medicationAdministration.getPerformer().isEmpty()) {
+		if (medicationAdministration.hasPerformer()) {
 			existingFhirMedicationAdministration.setPerformer(medicationAdministration.getPerformer().stream()
 			        .map(performerTranslator::toOpenmrsType).filter(obj -> obj != null).collect(Collectors.toSet()));
 		}
 		
 		existingFhirMedicationAdministration
 		        .setRequestReference(referenceTranslator.toOpenmrsType(medicationAdministration.getRequest()));
-		existingFhirMedicationAdministration.setDosage(dosageTranslator.toOpenmrsType(medicationAdministration.getDosage()));
 		
-		if (medicationAdministration.getNote() != null && !medicationAdministration.getNote().isEmpty()) {
+		if (medicationAdministration.hasDosage()) {
+			existingFhirMedicationAdministration
+			        .setDosage(dosageTranslator.toOpenmrsType(medicationAdministration.getDosage()));
+		}
+		
+		if (medicationAdministration.hasNote()) {
 			existingFhirMedicationAdministration.setNote(medicationAdministration.getNote().stream()
 			        .map(annotationTranslator::toOpenmrsType).filter(obj -> obj != null).collect(Collectors.toSet()));
 		}
 		
-		if (medicationAdministration.getSupportingInformation() != null
-		        && !medicationAdministration.getSupportingInformation().isEmpty()) {
+		if (medicationAdministration.hasSupportingInformation()) {
 			existingFhirMedicationAdministration
 			        .setSupportingInformation(medicationAdministration.getSupportingInformation().stream()
 			                .map(referenceTranslator::toOpenmrsType).filter(obj -> obj != null).collect(Collectors.toSet()));

@@ -11,11 +11,15 @@ package org.openmrs.module.fhir2.model;
 
 import javax.persistence.*;
 
+import java.util.Date;
+import java.util.UUID;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.Auditable;
 import org.openmrs.Concept;
+import org.openmrs.User;
 
 /**
  * FHIR MedicationAdministration.dosage -
@@ -26,7 +30,7 @@ import org.openmrs.Concept;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "fhir_medication_administration_dosage")
-public class FhirMedicationAdministrationDosage extends BaseOpenmrsMetadata {
+public class FhirMedicationAdministrationDosage implements Auditable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -46,5 +50,22 @@ public class FhirMedicationAdministrationDosage extends BaseOpenmrsMetadata {
 	@OneToOne
 	@JoinColumn(name = "route", referencedColumnName = "concept_id", nullable = false)
 	private Concept route;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "creator", updatable = false)
+	protected User creator;
+	
+	@Column(name = "date_created", nullable = false, updatable = false)
+	private Date dateCreated;
+	
+	@ManyToOne
+	@JoinColumn(name = "changed_by")
+	private User changedBy;
+	
+	@Column(name = "date_changed")
+	private Date dateChanged;
+	
+	@Column(name = "uuid", unique = true, nullable = false, length = 36)
+	private String uuid = UUID.randomUUID().toString();
 	
 }

@@ -11,19 +11,23 @@ package org.openmrs.module.fhir2.model;
 
 import javax.persistence.*;
 
+import java.util.Date;
+import java.util.UUID;
+
 import lombok.*;
-import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.Auditable;
 import org.openmrs.Concept;
+import org.openmrs.User;
 
 /**
  * FHIR MedicationAdministration.dosage -
- * https://hl7.org/fhir/R4/medicationadministration-definitions.html#MedicationAdministration.dosage
+ * https://hl7.org/fhir/R4/medicationadministration-definitions.html#MedicationAdministration.performer
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
-public class FhirPerformer extends BaseOpenmrsMetadata {
+public class FhirPerformer implements Auditable {
 	
 	@EqualsAndHashCode.Include
 	@Id
@@ -38,5 +42,22 @@ public class FhirPerformer extends BaseOpenmrsMetadata {
 	@OneToOne
 	@JoinColumn(name = "function", referencedColumnName = "concept_id")
 	protected Concept function;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "creator", updatable = false)
+	protected User creator;
+	
+	@Column(name = "date_created", nullable = false, updatable = false)
+	private Date dateCreated;
+	
+	@ManyToOne
+	@JoinColumn(name = "changed_by")
+	private User changedBy;
+	
+	@Column(name = "date_changed")
+	private Date dateChanged;
+	
+	@Column(name = "uuid", unique = true, nullable = false, length = 36)
+	private String uuid = UUID.randomUUID().toString();
 	
 }
