@@ -11,25 +11,56 @@ package org.openmrs.module.fhir2.model;
 
 import javax.persistence.*;
 
+import java.util.Date;
+import java.util.UUID;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.openmrs.Auditable;
+import org.openmrs.Concept;
+import org.openmrs.User;
 
 /**
- * FHIR MedicationAdministration.dosage -
+ * FHIR MedicationAdministration.performer -
  * https://hl7.org/fhir/R4/medicationadministration-definitions.html#MedicationAdministration.dosage
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "fhir_medication_administration_performer")
-public class FhirMedicationAdministrationPerformer extends FhirPerformer {
+public class FhirMedicationAdministrationPerformer implements Auditable {
 	
-	private static final long serialVersionUID = 1L;
+	@EqualsAndHashCode.Include
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "performer_id")
+	private Integer id;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "actor_reference_id", referencedColumnName = "reference_id", nullable = false)
+	private FhirReference actorReference;
+	
+	@OneToOne
+	@JoinColumn(name = "function", referencedColumnName = "concept_id")
+	private Concept function;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "creator", updatable = false)
+	private User creator;
+	
+	@Column(name = "date_created", nullable = false, updatable = false)
+	private Date dateCreated;
 	
 	@ManyToOne
-	@JoinColumn(name = "medication_administration_id")
-	private FhirMedicationAdministration medicationAdministration;
+	@JoinColumn(name = "changed_by")
+	private User changedBy;
+	
+	@Column(name = "date_changed")
+	private Date dateChanged;
+	
+	@Column(name = "uuid", unique = true, nullable = false, length = 36)
+	private String uuid = UUID.randomUUID().toString();
 	
 }

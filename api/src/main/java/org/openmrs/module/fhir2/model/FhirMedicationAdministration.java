@@ -89,7 +89,8 @@ public class FhirMedicationAdministration extends BaseOpenmrsData {
 	/**
 	 * Indicates who or what performed the medication administration and how they were involved.
 	 */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medicationAdministration")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "medication_administration_id")
 	private Set<FhirMedicationAdministrationPerformer> performer;
 	
 	/**
