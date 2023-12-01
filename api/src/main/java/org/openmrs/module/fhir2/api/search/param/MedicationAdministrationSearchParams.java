@@ -12,6 +12,7 @@ package org.openmrs.module.fhir2.api.search.param;
 import java.util.HashSet;
 
 import ca.uhn.fhir.model.api.Include;
+import ca.uhn.fhir.rest.param.DateParam;
 import ca.uhn.fhir.rest.param.DateRangeParam;
 import ca.uhn.fhir.rest.param.ReferenceAndListParam;
 import ca.uhn.fhir.rest.param.TokenAndListParam;
@@ -28,45 +29,36 @@ public class MedicationAdministrationSearchParams extends BaseResourceSearchPara
 	
 	private ReferenceAndListParam patientReference;
 	
-	private ReferenceAndListParam encounterReference;
+	private ReferenceAndListParam supportingInfoReference;
 	
-	private TokenAndListParam code;
-	
-	private ReferenceAndListParam participantReference;
+	private ReferenceAndListParam performerReference;
 	
 	private ReferenceAndListParam medicationReference;
 	
 	private TokenAndListParam status;
 	
-	private TokenAndListParam fulfillerStatus;
+	private DateParam effectiveDate;
 	
 	@Builder
 	public MedicationAdministrationSearchParams(ReferenceAndListParam patientReference,
-	    ReferenceAndListParam encounterReference, TokenAndListParam code, ReferenceAndListParam participantReference,
-	    ReferenceAndListParam medicationReference, TokenAndListParam id, TokenAndListParam status,
-	    TokenAndListParam fulfillerStatus, DateRangeParam lastUpdated, HashSet<Include> includes,
-	    HashSet<Include> revIncludes) {
+	    ReferenceAndListParam supportingInfoReference, ReferenceAndListParam performerReference,
+	    ReferenceAndListParam medicationReference, TokenAndListParam id, TokenAndListParam status, DateParam effectiveDate,
+	    DateRangeParam lastUpdated, HashSet<Include> includes, HashSet<Include> revIncludes) {
 		
 		super(id, lastUpdated, null, includes, revIncludes);
 		
 		this.patientReference = patientReference;
-		this.encounterReference = encounterReference;
-		this.code = code;
-		this.participantReference = participantReference;
+		this.supportingInfoReference = supportingInfoReference;
+		this.performerReference = performerReference;
 		this.medicationReference = medicationReference;
+		this.effectiveDate = effectiveDate;
 		this.status = status;
-		this.fulfillerStatus = fulfillerStatus;
 	}
 	
 	@Override
 	public SearchParameterMap toSearchParameterMap() {
-		return baseSearchParameterMap()
-		        .addParameter(FhirConstants.ENCOUNTER_REFERENCE_SEARCH_HANDLER, getEncounterReference())
-		        .addParameter(FhirConstants.PATIENT_REFERENCE_SEARCH_HANDLER, getPatientReference())
-		        .addParameter(FhirConstants.CODED_SEARCH_HANDLER, getCode())
-		        .addParameter(FhirConstants.PARTICIPANT_REFERENCE_SEARCH_HANDLER, getParticipantReference())
+		return baseSearchParameterMap().addParameter(FhirConstants.PATIENT_REFERENCE_SEARCH_HANDLER, getPatientReference())
 		        .addParameter(FhirConstants.MEDICATION_REFERENCE_SEARCH_HANDLER, getMedicationReference())
-		        .addParameter(FhirConstants.STATUS_SEARCH_HANDLER, getStatus())
-		        .addParameter(FhirConstants.FULFILLER_STATUS_SEARCH_HANDLER, getFulfillerStatus());
+		        .addParameter(FhirConstants.STATUS_SEARCH_HANDLER, getStatus());
 	}
 }
