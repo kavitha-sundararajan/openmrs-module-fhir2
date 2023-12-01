@@ -1150,7 +1150,7 @@
                                  baseTableName="fhir_medication_administration" baseColumnNames="changed_by"
                                  referencedTableName="users" referencedColumnNames="user_id"/>
         <addForeignKeyConstraint constraintName="fhir_medication_administration_retired_by_fk"
-                                 baseTableName="fhir_medication_administration" baseColumnNames="retired_by"
+                                 baseTableName="fhir_medication_administration" baseColumnNames="voided_by"
                                  referencedTableName="users" referencedColumnNames="user_id"/>
         <addForeignKeyConstraint baseTableName="fhir_medication_administration" baseColumnNames="medication_reference_id"
                                  constraintName="medication_reference_fk"
