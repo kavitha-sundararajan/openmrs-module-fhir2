@@ -9,23 +9,25 @@
  */
 package org.openmrs.module.fhir2.api.dao.impl;
 
-import static org.hibernate.criterion.Restrictions.ne;
+import static org.hibernate.criterion.Restrictions.*;
 
 import javax.annotation.Nonnull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ca.uhn.fhir.rest.param.ReferenceAndListParam;
+import ca.uhn.fhir.rest.param.ReferenceParam;
 import ca.uhn.fhir.rest.param.TokenAndListParam;
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.hl7.fhir.r4.model.MedicationRequest;
-import org.openmrs.Order;
 import org.openmrs.module.fhir2.FhirConstants;
 import org.openmrs.module.fhir2.api.dao.FhirMedicationAdministrationDao;
 import org.openmrs.module.fhir2.api.search.param.SearchParameterMap;
@@ -68,15 +70,17 @@ public class FhirMedicationAdministrationDaoImpl extends BaseFhirDao<FhirMedicat
 					        .forEach(e -> handleEncounterReference(criteria, (ReferenceAndListParam) e.getParam(), "e"));
 					break;
 				case FhirConstants.PATIENT_REFERENCE_SEARCH_HANDLER:
-					entry.getValue().forEach(patientReference -> handlePatientReference(criteria,
-					    (ReferenceAndListParam) patientReference.getParam(), "patient"));
+					entry.getValue().forEach(patientReference -> handleReference(criteria,
+					    (ReferenceAndListParam) patientReference.getParam(), "subjectReference", "s"));
 					break;
-				case FhirConstants.CODED_SEARCH_HANDLER:
-					entry.getValue().forEach(code -> handleCodedConcept(criteria, (TokenAndListParam) code.getParam()));
+				case FhirConstants.MEDICATION_ADMINISTRATION_SUPPORT_INFO_SEARCH_HANDLER:
+					entry.getValue().forEach(supportInfoReference -> handleReference(criteria,
+					    (ReferenceAndListParam) supportInfoReference.getParam(), "supportingInformation", "si"));
 					break;
-				case FhirConstants.PARTICIPANT_REFERENCE_SEARCH_HANDLER:
-					entry.getValue().forEach(participantReference -> handleProviderReference(criteria,
-					    (ReferenceAndListParam) participantReference.getParam()));
+				case FhirConstants.MEDICATION_ADMINISTRATION_PERFORMER_SEARCH_HANDLER:
+					entry.getValue()
+					        .forEach(participantReference -> handleMedicationAdministrationPerformerReference(criteria,
+					            (ReferenceAndListParam) participantReference.getParam(), "actorReference", "a"));
 					break;
 				case FhirConstants.MEDICATION_REFERENCE_SEARCH_HANDLER:
 					entry.getValue().forEach(d -> handleMedicationReference("d", (ReferenceAndListParam) d.getParam())
@@ -90,8 +94,6 @@ public class FhirMedicationAdministrationDaoImpl extends BaseFhirDao<FhirMedicat
 					break;
 			}
 		});
-		
-		excludeDiscontinueOrders(criteria);
 	}
 	
 	private Optional<Criterion> handleStatus(TokenAndListParam tokenAndListParam) {
@@ -122,8 +124,69 @@ public class FhirMedicationAdministrationDaoImpl extends BaseFhirDao<FhirMedicat
 		}
 	}
 	
-	private void excludeDiscontinueOrders(Criteria criteria) {
-		// exclude "discontinue" orders, see: https://issues.openmrs.org/browse/FM2-532
-		criteria.add(ne("action", Order.Action.DISCONTINUE));
+	private void handleReference(Criteria criteria, ReferenceAndListParam reference, String property, String alias) {
+		handleAndListParam(reference, param -> {
+			if (validReferenceParam(param)) {
+				if (lacksAlias(criteria, alias)) {
+					criteria.createAlias(property, alias);
+				}
+				
+				List<Optional<Criterion>> criterionList = new ArrayList<>();
+				criterionList.add(Optional.of(eq(String.format("%s.targetUuid", alias), param.getIdPart())));
+				criterionList.add(Optional.of(eq(String.format("%s.type", alias), param.getResourceType())));
+				return Optional.of(and(toCriteriaArray(criterionList)));
+			}
+			
+			return Optional.empty();
+		}).ifPresent(criteria::add);
+	}
+	
+	private void handleMedicationAdministrationPerformerReference(Criteria criteria, ReferenceAndListParam reference,
+	        String property, String alias) {
+		if (lacksAlias(criteria, "pr")) {
+			criteria.createAlias("performer", "pr");
+		}
+
+		handleAndListParam(reference, param -> {
+			if (validReferenceParam(param)) {
+				if (lacksAlias(criteria, alias)) {
+					criteria.createAlias(property, alias);
+				}
+				
+				List<Optional<Criterion>> criterionList = new ArrayList<>();
+				criterionList.add(Optional.of(eq(String.format("%s.targetUuid", alias), param.getIdPart())));
+				criterionList.add(Optional.of(eq(String.format("%s.type", alias), param.getResourceType())));
+				return Optional.of(and(toCriteriaArray(criterionList)));
+			}
+			
+			return Optional.empty();
+		}).ifPresent(criteria::add);
+	}
+//
+//	private void handleSupportingInformationReference(Criteria criteria, ReferenceAndListParam reference,
+//																  String property, String alias) {
+//		if (lacksAlias(criteria, "si")) {
+//			criteria.createAlias("supportingInformation", "supportingInformation");
+//		}
+//		criteria.add(eq("si."))
+//
+//		handleAndListParam(reference, param -> {
+//			if (validReferenceParam(param)) {
+//				if (lacksAlias(criteria, alias)) {
+//					criteria.createAlias(property, alias);
+//				}
+//
+//				List<Optional<Criterion>> criterionList = new ArrayList<>();
+//				criterionList.add(Optional.of(eq(String.format("%s.targetUuid", alias), param.getIdPart())));
+//				criterionList.add(Optional.of(eq(String.format("%s.type", alias), param.getResourceType())));
+//				return Optional.of(and(toCriteriaArray(criterionList)));
+//			}
+//
+//			return Optional.empty();
+//		}).ifPresent(criteria::add);
+//	}
+	
+	private Boolean validReferenceParam(ReferenceParam ref) {
+		return (ref != null && ref.getIdPart() != null && ref.getResourceType() != null);
 	}
 }

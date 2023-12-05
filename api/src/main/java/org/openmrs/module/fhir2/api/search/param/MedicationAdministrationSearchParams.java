@@ -58,7 +58,8 @@ public class MedicationAdministrationSearchParams extends BaseResourceSearchPara
 	@Override
 	public SearchParameterMap toSearchParameterMap() {
 		return baseSearchParameterMap().addParameter(FhirConstants.PATIENT_REFERENCE_SEARCH_HANDLER, getPatientReference())
-		        .addParameter(FhirConstants.MEDICATION_REFERENCE_SEARCH_HANDLER, getMedicationReference())
-		        .addParameter(FhirConstants.STATUS_SEARCH_HANDLER, getStatus());
+		        //.addParameter(FhirConstants.MEDICATION_ADMINISTRATION_PERFORMER_SEARCH_HANDLER, getPerformerReference());
+		        .addParameter(FhirConstants.MEDICATION_ADMINISTRATION_SUPPORT_INFO_SEARCH_HANDLER,
+		            getSupportingInfoReference());
 	}
 }
