@@ -191,6 +191,10 @@ public final class FhirConstants {
 	
 	public static final String MEDICATION_REQUEST_REFERENCE_SEARCH_HANDLER = "medicationRequest.reference.search.handler";
 	
+	public static final String MEDICATION_ADMINISTRATION_PERFORMER_SEARCH_HANDLER = "medicationAdministration.performer.search.handler";
+	
+	public static final String MEDICATION_ADMINISTRATION_SUPPORT_INFO_SEARCH_HANDLER = "medicationAdministration.supportInfo.search.handler";
+	
 	public static final String MEDICATION_REFERENCE_SEARCH_HANDLER = "medication.reference.search.handler";
 	
 	public static final String CODED_SEARCH_HANDLER = "coded.search.handler";
